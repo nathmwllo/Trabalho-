@@ -28,10 +28,10 @@ if ($_SESSION["cargo"] != "Administrador") {
     <header>
         <h1>HQ MANIA</h1>
         <nav>
-            <a href="#">Cadastro de usuário</a>
-            <a href="#">Catálogo</a>
-            <a href="#">Cadastro de produto</a>
-            <a href="#">Usuários</a>
+            <a href="cadastro_adm.php">Cadastro de usuário</a>
+            <a href="catalogo.php">Catálogo</a>
+            <a href="produtos_adm.php">Cadastro de produto</a>
+            <a href="usuarios_adm.php">Usuários</a>
             <a href="logout.php">Sair</a>
         </nav>
 
