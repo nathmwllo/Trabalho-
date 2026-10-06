@@ -19,7 +19,7 @@ session_start();
         <h1>HQ MANIA</h1>
         <nav>
             <a href="login.php">Login</a>
-            <a href="#">Catálogo</a>
+            <a href="catalogo.php">Catálogo</a>
             <a href="#">Carrinho</a>
             <a href="#">Perfil</a>
         </nav>
