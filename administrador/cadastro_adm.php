@@ -2,7 +2,7 @@
 
 session_start();
 
-require_once("conexao.php");
+require_once("../conexao.php");
 
 $mensagem = "";
 
@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         );
         $stmt->execute();
         $mensagem = "Cadastro realizado com sucesso!";
-        header("Location: index.php");
+        header("Location: ../index.php");
     }
 }
 
@@ -60,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <head>
     <meta charset="UTF-8">
     <title>Cadastro - HQ Mania</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
 </head>
 
 <body>
@@ -77,35 +77,37 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <form method="POST">
 
             <label>Nome</label>
-            <input type="text" name="nome" required >
+            <input type="text" name="nome">
 
             <label>CPF</label>
-            <input type="text" name="cpf" pattern="[0-9]+" required title="Apenas números são permitidos.">
+            <input type="text" name="cpf" pattern="[0-9]+" title="Apenas números são permitidos.">
 
             <label>Data de nascimento</label>
-            <input type="date" name="data_nasc" required>
+            <input type="date" name="data_nasc" >
             
             <label>Telefone</label>
-            <input type="text" name="telefone" pattern="[0-9]+" required title="Apenas números são permitidos.">
+            <input type="text" name="telefone" pattern="[0-9]+" title="Apenas números são permitidos.">
 
             <label>E-mail</label>
-            <input type="email" name="email" required placeholder="exemplo@dominio.com">
+            <input type="email" name="email" placeholder="exemplo@dominio.com">
 
             <label>Senha</label>
-            <input type="password" name="senha" required>
+            <input type="password" name="senha">
 
             <button type="submit">
                 CRIAR CONTA
             </button>
+
         </form>
 
         <p>
             Já possui uma conta?
-            <a href="login.php">
+            <a href="../login.php">
                 Faça login
             </a>
         </p>
-
+         
+        <p>Deseja voltar para o início? <a href="admindex.php">Clique aqui</a></p>
     </div>
 
 </body>

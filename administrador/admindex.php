@@ -3,12 +3,12 @@
 session_start();
 
 if (!isset($_SESSION["id_usuario"])) {
-    header("Location: login.php");
+    header("Location: ../login.php");
     exit;
 }
 
 if ($_SESSION["cargo"] != "Administrador") {
-    header("Location: index.php");
+    header("Location: ../index.php");
     exit;
 }
 
@@ -20,7 +20,7 @@ if ($_SESSION["cargo"] != "Administrador") {
 <head>
     <meta charset="UTF-8">
     <title>Administração - HQ Mania</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
 </head>
 
 <body>
@@ -29,10 +29,10 @@ if ($_SESSION["cargo"] != "Administrador") {
         <h1>HQ MANIA</h1>
         <nav>
             <a href="cadastro_adm.php">Cadastro de usuário</a>
-            <a href="catalogo.php">Catálogo</a>
+            <a href="../usuarios/catalogo.php">Catálogo</a>
             <a href="produtos_adm.php">Cadastro de produto</a>
-            <a href="usuarios_adm.php">Usuários</a>
-            <a href="logout.php">Sair</a>
+            <a href="usuarios.php">Usuários</a>
+            <a href="../logout.php">Sair</a>
         </nav>
 
     </header>

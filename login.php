@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $_SESSION["cargo"] = $usuario["cargo"];
 
             if ($usuario["cargo"] == "Administrador") {
-                header("Location:admindex.php");
+                header("Location:administrador/admindex.php");
             } else {
                 header("Location:index.php");
             }
@@ -75,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         </form>
         <p>
             Ainda não tem uma conta?
-            <a href="cadastro.php">
+            <a href="usuarios/cadastro.php">
                 Cadastre-se
             </a>
         </p>
