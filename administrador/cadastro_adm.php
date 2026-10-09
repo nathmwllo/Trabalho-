@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         );
         $stmt->execute();
         $mensagem = "Cadastro realizado com sucesso!";
-        header("Location: ../index.php");
+        header("Location: admindex.php");
     }
 }
 
