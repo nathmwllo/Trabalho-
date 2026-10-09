@@ -8,6 +8,11 @@ body {
     font-family: Arial, sans-serif;
     color: #111;
 }
+img {
+    display: flex;
+    max-width: 100%;
+    width: 500px;
+}
 header {
     height: 115px;
 

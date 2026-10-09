@@ -16,7 +16,7 @@ session_start();
 <body>
 
     <header>
-        <h1>HQ MANIA</h1>
+        <img src="logo.png" alt="logo">
         <nav>
             <a href="login.php">Login</a>
             <a href="catalogo.php">Catálogo</a>
