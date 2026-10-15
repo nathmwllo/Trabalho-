@@ -19,9 +19,9 @@ session_start();
         <img src="img/logo.png" alt="logo">
         <nav>
             <a href="usuarios/login.php">
-                <img src="img/login.png" alt="login">Login</a>
+                <img src="img/login.png" alt="login"><span>Login</span></a>
             <a href="index.php">
-                <img src="img/inicio.png" alt="inicio">Início</a>
+                <img src="img/inicio.png" alt="inicio"><span>Início</span></a>
             <a href="produtos/catalogo.php">
                 <img src="img/catalogo.png" alt="catálogo">Catálogo</a>
             <a href="#">
