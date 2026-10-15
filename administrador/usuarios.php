@@ -62,20 +62,28 @@ $resultado = $stmt->get_result();
     <link rel="stylesheet" href="../style.css">
 
 </head>
-
+<style>
+    .voltar{
+    padding: 12px 20px;
+    background: #9d8b55;
+    border: 3px solid black;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    }
+</style>
 <body>
 
 <header>
 
-    <h1>HQ MANIA</h1>
+    <img src="../img/logo.png" alt="">
 
     <nav>
 
         <a href="admindex.php">Início</a>
-        <a href="../usuarios/cadastro.php">Cadastro de usuário</a>
-        <a href="../usuarios/catalogo.php">Catálogo</a>
+        <a href="../produtos/listagem.php">Produtos</a>
         <a href="usuarios.php">Usuários</a>
-        <a href="../logout.php">Sair</a>
+        <a href="../usuarios/logout.php">Sair</a>
 
     </nav>
 
@@ -84,7 +92,7 @@ $resultado = $stmt->get_result();
 <main class="pagina-usuarios">
 
     <h2>ADMINISTRAÇÃO DE USUÁRIOS</h2>
-
+    <a href="cadastro_adm.php" style="text-decoration:none ; text-align:left;">Cadastrar novo usuário</a>
     <form method="GET" class="pesquisa">
 
         <input type="text" name="pesquisa" placeholder="Pesquisar por nome ou e-mail" value="<?= $pesquisa ?>">
@@ -92,7 +100,7 @@ $resultado = $stmt->get_result();
         <button type="submit">
             PESQUISAR
         </button>
-        <a href="usuarios.php">Voltar</a>
+        <a href="usuarios.php" class="voltar">Voltar</a>
 
 
     </form>

@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-require_once("conexao.php");
+require_once("../conexao.php");
 
 $mensagem = "";
 
@@ -27,9 +27,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $_SESSION["cargo"] = $usuario["cargo"];
 
             if ($usuario["cargo"] == "Administrador") {
-                header("Location:administrador/admindex.php");
+                header("Location:../administrador/admindex.php");
             } else {
-                header("Location:index.php");
+                header("Location:../index.php");
             }
             exit;
         } else {
@@ -47,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <head>
     <meta charset="UTF-8">
     <title>Login - HQ Mania</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
 </head>
 
 <body>
@@ -75,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         </form>
         <p>
             Ainda não tem uma conta?
-            <a href="usuarios/cadastro.php">
+            <a href="cadastro.php">
                 Cadastre-se
             </a>
         </p>

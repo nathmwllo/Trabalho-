@@ -3,7 +3,7 @@ session_start();
 require_once("../conexao.php");
 
 if (!isset($_SESSION["id_usuario"])) {
-    header("Location: ../login.php");
+    header("Location: ../usuarios/login.php");
     exit;
 }
 if ($_SESSION["cargo"] != "Administrador") {
@@ -103,14 +103,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <nav>
 
 <a href="admindex.php">Início</a>
-
-<a href="../usuarios/cadastro.php">
-Cadastro de usuário
-</a>
-
-<a href="../usuarios/catalogo.php">Catálogo</a>
+<a href="../produtos/listagem.php">Produtos</a>
 <a href="usuarios.php">Usuários</a>
-<a href="../logout.php">Sair</a>
+<a href="../usuarios/logout.php">Sair</a>
 
 </nav>
 

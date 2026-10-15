@@ -3,7 +3,7 @@
 session_start();
 
 if (!isset($_SESSION["id_usuario"])) {
-    header("Location: ../login.php");
+    header("Location: ../usuarios/login.php");
     exit;
 }
 
@@ -26,13 +26,12 @@ if ($_SESSION["cargo"] != "Administrador") {
 <body>
 
     <header>
-        <h1>HQ MANIA</h1>
+        <img src="../img/logo.png" alt="">
         <nav>
-            <a href="cadastro_adm.php">Cadastro de usuário</a>
-            <a href="../usuarios/catalogo.php">Catálogo</a>
-            <a href="produtos_adm.php">Cadastro de produto</a>
+            <a href="../produtos/listagem.php">Produtos</a>
+            <a href="../produtos/cadastro_produtos.php">Cadastrar HQ</a>
             <a href="usuarios.php">Usuários</a>
-            <a href="../logout.php">Sair</a>
+            <a href="../usuarios/logout.php">Sair</a>
         </nav>
 
     </header>
@@ -42,6 +41,7 @@ if ($_SESSION["cargo"] != "Administrador") {
 
     <main>
         <h2>Área do Administrador</h2>
+        <p style="text-align: center;">Seja Bem-Vindo(a) a sua área de administração! <br> Aqui você pode administrar os usuários e os produtos cadastrados em seu site.</p>
     </main>
 
     <footer>

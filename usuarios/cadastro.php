@@ -101,7 +101,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <p>
             Já possui uma conta?
-            <a href="../login.php">
+            <a href="login.php">
                 Faça login
             </a>
         </p>
