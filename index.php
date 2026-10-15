@@ -16,18 +16,18 @@ session_start();
 <body>
 
     <header>
-        <img src="img/logo.png" alt="logo">
+        <img src="" alt="logo">
         <nav>
             <a href="usuarios/login.php">
-                <img src="img/login.png" alt="login"><span>Login</span></a>
+                <img src="" alt="login"><span>Login</span></a>
             <a href="index.php">
-                <img src="img/inicio.png" alt="inicio"><span>Início</span></a>
+                <img src="" alt="inicio"><span>Início</span></a>
             <a href="produtos/catalogo.php">
-                <img src="img/catalogo.png" alt="catálogo">Catálogo</a>
+                <img src="" alt="catálogo">Catálogo</a>
             <a href="#">
-                <img src="img/carrinho.png" alt="">Carrinho</a>
+                <img src="" alt="">Carrinho</a>
             <a href="#">
-                <img src="img/perfil.png" alt="perfil">Perfil</a>
+                <img src="" alt="perfil">Perfil</a>
         </nav>
     </header>
 
