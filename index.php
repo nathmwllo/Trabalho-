@@ -16,16 +16,16 @@ session_start();
     <header>
         <img src="" alt="logo">
         <nav>
-            <a href="usuarios/login.php">
-                <img src="" alt="login"><span>Login</span></a>
+            <a href="login.php" <?php if (isset($_SESSION['id_usuario'])) echo 'style="display:none"'; ?>>
+                <img src="img/login.png" alt="">Login</a>
             <a href="index.php">
-                <img src="" alt="inicio"><span>Início</span></a>
+                <img src="img/inicio.png" alt="inicio"><span>Início</span></a>
             <a href="produtos/catalogo.php">
-                <img src="" alt="catálogo">Catálogo</a>
+                <img src="img/catalogo.png" alt="catálogo">Catálogo</a>
             <a href="#">
-                <img src="" alt="">Carrinho</a>
+                <img src="img/carrinho.png" alt="">Carrinho</a>
             <a href="#">
-                <img src="" alt="perfil">Perfil</a>
+                <img src="img/perfil.png" alt="perfil">Perfil</a>
         </nav>
     </header>
 
