@@ -1,14 +1,14 @@
 <?php
 session_start();
-require_once("conexao.php");
+require_once("../conexao.php");
 
 if (!isset($_SESSION["id_usuario"])) {
-    header("Location: login.php");
+    header("Location: ../usuarios/login.php");
     exit;
 }
 
 if ($_SESSION["cargo"] != "Administrador") {
-    header("Location: index.php");
+    header("Location: ../index.php");
     exit;
 }
 
@@ -144,7 +144,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <title>Editar produto - HQ Mania</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
 </head>
 
 <body>

@@ -22,23 +22,24 @@ $resultado = $stmt->get_result();
 <head>
     <meta charset="UTF-8">
     <title>Catálogo - HQ Mania</title>
+    <link rel="stylesheet" href="../style.css">
 </head>
 
 <body>
 
 <header>
-        <img src="img/logo.png" alt="logo">
+        <img src="../img/logo.png" alt="logo">
         <nav>
             <a href="usuarios/login.php">
-                <img src="img/login.png" alt="login">Login</a>
+                <img src="../img/login.png" alt="login">Login</a>
             <a href="index.php">
-                <img src="img/inicio.png" alt="inicio">Início</a>
+                <img src="../img/inicio.png" alt="inicio">Início</a>
             <a href="produtos/catalogo.php">
-                <img src="img/catalogo.png" alt="catálogo">Catálogo</a>
+                <img src="../img/catalogo.png" alt="catálogo">Catálogo</a>
             <a href="#">
-                <img src="img/carrinho.png" alt="">Carrinho</a>
+                <img src="../img/carrinho.png" alt="">Carrinho</a>
             <a href="#">
-                <img src="img/perfil.png" alt="perfil">Perfil</a>
+                <img src="../img/perfil.png" alt="perfil">Perfil</a>
         </nav>
     </header>
 
@@ -52,6 +53,7 @@ $resultado = $stmt->get_result();
         value="<?= htmlspecialchars($pesquisa) ?>"
     >
     <button type="submit">Pesquisar</button>
+    <a href="catalogo.php">Voltar</a>
 </form>
 
 <hr>

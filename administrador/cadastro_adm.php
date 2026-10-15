@@ -107,7 +107,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             </a>
         </p>
          
-        <p>Deseja voltar para o início? <a href="admindex.php">Clique aqui</a></p>
+        <p>Deseja voltar para o início? <a href="usuarios.php">Clique aqui</a></p>
     </div>
 
 </body>

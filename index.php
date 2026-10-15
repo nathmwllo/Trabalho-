@@ -1,7 +1,5 @@
 <?php
-
 session_start();
-
 ?>
 
 <!DOCTYPE html>
@@ -18,8 +16,8 @@ session_start();
     <header>
         <img src="img/logo.png" alt="logo">
         <nav>
-            <a href="usuarios/login.php">
-                <img src="img/login.png" alt="login"><span>Login</span></a>
+            <a href="usuarios/login.php" <?php if (isset($_SESSION['id_usuario'])) echo 'style="display:none"'; ?>>
+                <img src="img/login.png" alt="login">Login</a>
             <a href="index.php">
                 <img src="img/inicio.png" alt="inicio"><span>Início</span></a>
             <a href="produtos/catalogo.php">

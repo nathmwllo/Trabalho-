@@ -43,9 +43,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if (!isset($tiposPermitidos[$tipo])) {
 
             $mensagem = "Use uma imagem JPG, PNG ou WEBP.";
-        } elseif ($_FILES["imagem"]["size"] > 2 * 1024 * 1024) {
-
-            $mensagem = "A imagem deve ter no máximo 2 MB.";
         } else {
 
             $pasta = "uploads/";
@@ -107,54 +104,45 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastrar produto - HQ Mania</title>
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body>
 
-    <h1>Cadastro de Produtos - HQ Mania</h1>
-
-    <p>
-        <?php echo htmlspecialchars($mensagem); ?>
-    </p>
-
-    <form method="POST" enctype="multipart/form-data">
-
-        <label>Nome da HQ:</label><br>
-        <input type="text" name="nome_produto" required>
-        <br><br>
-
-        <label>Editora:</label><br>
-        <input type="text" name="editora" required>
-        <br><br>
-
-        <label>Edição:</label><br>
-        <input type="text" name="edicao" required>
-        <br><br>
-
-        <label>Sinopse:</label><br>
-        <textarea name="sinopse" required></textarea>
-        <br><br>
-
-        <label>Preço (R$):</label><br>
-        <input type="number" name="preco"
-               min="0" step="0.01" required>
-        <br><br>
-
-        <label>Quantidade em estoque:</label><br>
-        <input type="number" name="estoque"
-               min="0" step="1" required>
-        <br><br>
-
-        <label>Capa da HQ:</label><br>
-        <input type="file" name="imagem"
-               accept=".jpg,.jpeg,.png,.webp" required>
-        <br><br>
-
-        <button type="submit">Cadastrar produto</button>
-
-    </form>
-
-    <br>
-    <a href="listagem.php">Ver produtos cadastrados</a>
+    <div class="formulario">
+        <h1>Cadastro de Produtos</h1>
+        <p>
+            <?php echo htmlspecialchars($mensagem); ?>
+        </p>
+        <form method="POST" enctype="multipart/form-data">
+            <label>Nome da HQ:</label><br>
+            <input type="text" name="nome_produto" required>
+            <br><br>
+            <label>Editora:</label><br>
+            <input type="text" name="editora" required>
+            <br><br>
+            <label>Edição:</label><br>
+            <input type="text" name="edicao" required>
+            <br><br>
+            <label>Sinopse:</label><br>
+            <textarea name="sinopse" required></textarea>
+            <br><br>
+            <label>Preço (R$):</label><br>
+            <input type="number" name="preco"
+                   min="0" step="0.01" required>
+            <br><br>
+            <label>Quantidade em estoque:</label><br>
+            <input type="number" name="estoque"
+                   min="0" step="1" required>
+            <br><br>
+            <label>Capa da HQ:</label><br>
+            <input type="file" name="imagem"
+                   accept=".jpg,.jpeg,.png,.webp" required>
+            <br><br>
+            <button type="submit">Cadastrar produto</button>
+        </form>
+        <br>
+        <a href="listagem.php">Ver produtos cadastrados</a>
+    </div>
 
 </body>
 </html>

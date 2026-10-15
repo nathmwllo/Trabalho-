@@ -65,11 +65,14 @@ $resultado = $stmt->get_result();
 <style>
     .voltar{
     padding: 12px 20px;
+    font-size: 14px;
     background: #9d8b55;
     border: 3px solid black;
     border-radius: 8px;
     font-weight: bold;
     cursor: pointer;
+    text-decoration: none;
+    color: #111;
     }
 </style>
 <body>
@@ -100,7 +103,7 @@ $resultado = $stmt->get_result();
         <button type="submit">
             PESQUISAR
         </button>
-        <a href="usuarios.php" class="voltar">Voltar</a>
+        <a href="usuarios.php" class="voltar">VOLTAR</a>
 
 
     </form>
