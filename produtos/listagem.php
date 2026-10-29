@@ -67,7 +67,7 @@ if (!$resultado) {
                                 </td>
                                 <td>
                                     <?php if (!empty($produto["imagem"])): ?>
-                                        <img style="width: 100px; height:auto;"
+                                        <img style="width: 100px; height:auto; border: 2px;"
                                             src="<?= htmlspecialchars($produto["imagem"]) ?>"
                                             alt="Capa do quadrinho"
                                         >
@@ -85,27 +85,15 @@ if (!$resultado) {
                                     <?= htmlspecialchars($produto["edicao"] ?? "") ?>
                                 </td>
                                 <td>
-                                    R$ <?= number_format(
-                                        (float) $produto["preco"],
-                                        2,
-                                        ",",
-                                        "."
-                                    ) ?>
+                                    R$ <?= number_format( (float) $produto["preco"], 2, ",", ".") ?>
                                 </td>
                                 <td>
-                                    <?= (int) $produto["estoque"] ?>
+                                     <?= (int) $produto["estoque"] ?>
                                 </td>
                                 <td>
-                                    <a
-                                        href="editar_produto.php?id=<?= (int) $produto["id_produto"] ?>"
-                                    >
-                                        Editar
-                                    </a>
+                                    <a href="editar_produto.php?id=<?= (int) $produto["id_produto"] ?>">Editar</a>
                                     <br><br>
-                                    <a
-                                        href="excluir_produto.php?id=<?= (int) $produto["id_produto"] ?>"
-                                        onclick="return confirm('Deseja realmente excluir este produto?')"
-                                    >
+                                    <a href="excluir_produto.php?id=<?= (int) $produto["id_produto"] ?>" onclick="return confirm('Deseja realmente excluir este produto?')">
                                         Excluir
                                     </a>
                                 </td>

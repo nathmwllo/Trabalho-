@@ -79,54 +79,33 @@ nav a:hover {
     box-shadow: 1px 1px 0 black;
 }
 
-
-/* =========================
-   CONTEÚDO
-========================= */
-
 main {
     flex: 1;
-    padding: 50px;
-}
-
+    padding: 20px 50px; }
 
 main h2 {
     text-align: center;
-
     font-family: Arial Black, Arial, sans-serif;
-
     font-size: 34px;
-
     font-weight: 900;
-
     color: #5a2929;
-
     text-shadow: 2px 2px 0 white;
+    margin: 0 0 15px 0;        
 }
 
 
-/* =========================
-   RODAPÉ
-========================= */
-
 footer {
     height: 70px;
-
     background-color: #9d8b55;
-
     background-image: radial-gradient(
         #665b3b 2px,
         transparent 2px
     );
 
     background-size: 14px 14px;
-
     border-top: 7px solid black;
-
     display: flex;
-
     align-items: center;
-
     justify-content: center;
 }
 
@@ -157,8 +136,6 @@ footer {
 }
 
 
-/* CAMPOS */
-
 .formulario label {
     display: block;
 
@@ -184,9 +161,6 @@ footer {
 
     font-size: 16px;
 }
-
-
-/* BOTÃO */
 
 .formulario button {
     width: 100%;
@@ -215,9 +189,6 @@ footer {
     background: #8e773f;
 }
 
-
-/* MENSAGEM */
-
 .mensagem {
     padding: 10px;
 
@@ -232,9 +203,6 @@ footer {
     font-weight: bold;
 }
 
-
-/* LINKS */
-
 .formulario a {
     color: #743b3b;
 
@@ -248,16 +216,9 @@ footer {
     text-decoration: underline;
 }
 
-
-/* LOGIN */
-
 .login {
     width: 500px;
 }
-
-/* =========================
-   PÁGINA DE USUÁRIOS
-========================= */
 
 .pagina-usuarios {
     padding: 40px;
@@ -268,8 +229,6 @@ footer {
     margin-bottom: 30px;
 }
 
-
-/* PESQUISA */
 
 .pesquisa {
     display: flex;
@@ -299,8 +258,6 @@ footer {
 
     cursor: pointer;
 }
-
-/* TABELA */
 
 .tabela {
     width: 100%;
@@ -333,9 +290,6 @@ footer {
     padding: 10px;
 }
 
-
-/* CAMPOS DE EDIÇÃO */
-
 .tabela td input,
 .tabela td select {
     width: 100%;
@@ -347,8 +301,6 @@ footer {
     border-radius: 5px;
 }
 
-
-/* BOTÃO SALVAR */
 
 .tabela td button {
     padding: 8px 12px;
@@ -367,8 +319,6 @@ footer {
 }
 
 
-/* LINKS DE AÇÃO */
-
 .tabela td a {
     display: inline-block;
 
@@ -383,4 +333,30 @@ footer {
 
 .tabela td a:hover {
     text-decoration: underline;
+}
+
+.carrossel {
+    width: 100%;
+    aspect-ratio: 1920 / 568;   
+    overflow: hidden;           
+    line-height: 0;
+}
+
+.slides {
+    display: flex;
+    width: 200%;                
+    height: 100%;
+    transition: transform 1.0s ease;
+}
+
+.slides img {
+    display: block;
+    width: 50%;
+    height: 100%;
+    max-width: none;
+    object-fit: cover;          
+    object-position: center;
+}
+.carrossel:hover .slides {
+    transform: translateX(-50%);
 }
