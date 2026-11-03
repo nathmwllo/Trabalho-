@@ -360,4 +360,171 @@ footer {
 .carrossel:hover .slides {
     transform: translateX(-50%);
 }
+/* ===== CATÁLOGO ===== */
+
+.catalogo {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 22px;
+    align-items: start;          /* o card que abre não estica os vizinhos */
+    margin: 15px 0 30px 0;       /* sem max-width: começa na esquerda */
+}
+
+/* o <hr> entre os cards some */
+.catalogo > hr {
+    display: none;
+}
+
+/* ----- card fechado ----- */
+.catalogo > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 12px;
+    background: #eee8d8;         /* mesma cor da tabela do site */
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* hover: o card "sobe" e a sombra se espalha ao redor */
+.catalogo > div:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.35);
+    position: relative;
+    z-index: 2;
+}
+
+.catalogo > div > img {
+    width: 100%;                 /* sobrescreve o width="150" do HTML */
+    height: 170px;
+    object-fit: contain;
+    margin-bottom: 10px;
+    border-radius: 6px;
+}
+
+.catalogo h3 {
+    margin: 0 0 6px 0;
+    font-size: 15px;
+    font-weight: bold;
+    color: #5a2929;              /* vinho do título do site */
+}
+
+.catalogo p {
+    margin: 0 0 5px 0;
+    font-size: 12px;
+    color: #444;
+}
+
+/* o preço é o 2º <p> do card (1º = edição) */
+.catalogo > div > p:nth-of-type(2) {
+    font-family: Impact, "Arial Black", sans-serif;
+    font-size: 20px;
+    color: #5a2929;
+    margin: 6px 0;
+}
+
+.catalogo form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+}
+
+/* mesmo estilo dos botões do site (dourado) */
+.catalogo button {
+    margin: 6px 0;
+    padding: 8px 14px;
+    background: #9d8b55;
+    color: #111;
+    border: 2px solid black;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.catalogo button:hover {
+    background: #8e773f;
+    color: white;
+}
+
+/* ----- ver mais / ver menos ----- */
+.catalogo details {
+    width: 100%;
+    margin-top: 4px;
+    text-align: left;
+}
+
+.catalogo summary {
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    color: #5a2929;
+    text-align: center;
+}
+
+.catalogo summary:hover {
+    text-decoration: underline;
+}
+
+.catalogo details p {
+    margin-top: 8px;
+    line-height: 1.4;
+}
+
+/* ----- card aberto: capa à esquerda, informações à direita ----- */
+.catalogo > div:has(details[open]) {
+    grid-column: span 2;                     /* card maior */
+    display: grid;
+    grid-template-columns: 170px 1fr;
+    column-gap: 20px;
+    align-content: start;
+    text-align: left;
+    background: #e5e0d3;                     /* mesma cor dos botões do menu */
+}
+
+.catalogo > div:has(details[open]) > img {
+    grid-column: 1;
+    grid-row: 1 / span 20;                   /* capa ocupa a lateral inteira */
+    height: auto;
+    max-height: 260px;
+    margin: 0;
+}
+
+.catalogo > div:has(details[open]) > *:not(img) {
+    grid-column: 2;
+}
+
+/* sem capa: usa a largura toda */
+.catalogo > div:has(details[open]):not(:has(> img)) {
+    grid-template-columns: 1fr;
+}
+.catalogo > div:has(details[open]):not(:has(> img)) > * {
+    grid-column: 1;
+}
+
+.catalogo > div:has(details[open]) form {
+    justify-content: flex-start;
+}
+
+.catalogo > div:has(details[open]) summary {
+    text-align: left;
+}
+
+/* ----- celular ----- */
+@media (max-width: 600px) {
+    .catalogo {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+
+    .catalogo > div:has(details[open]) {
+        grid-template-columns: 100px 1fr;
+        column-gap: 12px;
+    }
+}
 

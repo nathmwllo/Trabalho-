@@ -141,41 +141,36 @@ nav .dropdown a + a {
     <hr>
     
     <?php if ($resultado->num_rows > 0): ?>
-        <?php while ($produto = $resultado->fetch_assoc()): ?>
-    
-            <div>
-                <?php if (!empty($produto["imagem"])): ?>
-                    <img src="<?= htmlspecialchars($produto['imagem']) ?>" alt="Capa do quadrinho" width="150">
-                <?php endif; ?>
-    
-                <h3><?= htmlspecialchars($produto["nome_produto"]) ?></h3>
-                <p>Edição: <?= htmlspecialchars($produto["edicao"]) ?></p>
-                <p>Preço: R$ <?= number_format($produto["preco"], 2, ",", ".") ?></p>
-    
-                <?php if ($produto["estoque"] > 0): ?>
-                    <p>Disponível em estoque</p>
-    
-                    <form action="adicionar_carrinho.php" method="POST">
-                        <input type="hidden" name="id_produto" value="<?= (int) $produto["id_produto"] ?>">
-                        <input type="hidden" name="quantidade" value="1">
-                        <button type="submit">Adicionar ao carrinho</button>
-                    </form>
-                <?php else: ?>
-                    <p>Indisponível em estoque</p>
-                <?php endif; ?>
-    
-                <details>
-                    <summary><span class="texto-botao" style="cursor: pointer;">Ver mais</span></summary>
-                    <?php
-                        echo "<p>Editora: " . htmlspecialchars($produto["editora"]) . "</p>";
-                        echo "<p>Sinopse: " . nl2br(htmlspecialchars($produto["sinopse"])) . "</p>";
-                    ?>
-                </details>
-            </div>
-    
-            <hr>
-    
-        <?php endwhile; ?>
+        <section class= "catalogo">
+            <?php while ($produto = $resultado->fetch_assoc()): ?>
+                <div>
+                    <?php if (!empty($produto["imagem"])): ?>
+                        <img src="<?= htmlspecialchars($produto['imagem']) ?>" alt="Capa do quadrinho" width="150">
+                    <?php endif; ?>
+                    <h3><?= htmlspecialchars($produto["nome_produto"]) ?></h3>
+                    <p>Edição: <?= htmlspecialchars($produto["edicao"]) ?></p>
+                    <p>Preço: R$ <?= number_format($produto["preco"], 2, ",", ".") ?></p>
+                    <?php if ($produto["estoque"] > 0): ?>
+                        <p>Disponível em estoque</p>
+                        <form action="adicionar_carrinho.php" method="POST">
+                            <input type="hidden" name="id_produto" value="<?= (int) $produto["id_produto"] ?>">
+                            <input type="hidden" name="quantidade" value="1">
+                            <button type="submit">Adicionar ao carrinho</button>
+                        </form>
+                    <?php else: ?>
+                        <p>Indisponível em estoque</p>
+                    <?php endif; ?>
+                    <details>
+                        <summary><span class="texto-botao" style="cursor: pointer;">Ver mais</span></summary>
+                        <?php
+                            echo "<p>Editora: " . htmlspecialchars($produto["editora"]) . "</p>";
+                            echo "<p>Sinopse: " . nl2br(htmlspecialchars($produto["sinopse"])) . "</p>";
+                        ?>
+                    </details>
+                </div>
+                <hr>
+            <?php endwhile; ?>
+        </section>
     <?php else: ?>
         <p>Nenhum quadrinho encontrado.</p>
     <?php endif; ?>
