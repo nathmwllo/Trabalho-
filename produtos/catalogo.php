@@ -2,7 +2,6 @@
 session_start();
 require_once "../conexao.php";
 
-// Pesquisa de produtos
 $pesquisa = trim($_GET["pesquisa"] ?? "");
 
 $sql = "SELECT * FROM produtos

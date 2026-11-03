@@ -70,7 +70,7 @@ nav .dropdown a + a {
     <header>
         <img src="img/logo.png" alt="logo">
         <nav>
-            <a href="login.php" <?php if (isset($_SESSION['id_usuario'])) echo 'style="display:none"'; ?>>
+            <a href="usuarios/login.php" <?php if (isset($_SESSION['id_usuario'])) echo 'style="display:none"'; ?>>
                 <img src="img/login.png" alt="">Login</a>
             <a href="index.php">
                 <img src="img/inicio.png" alt="inicio"><span>Início</span></a>

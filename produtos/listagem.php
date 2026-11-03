@@ -30,7 +30,7 @@ if (!$resultado) {
     <img src="../img/logo.png" alt="">
 
     <nav>
-        <a href="admindex.php">Início</a>
+        <a href="../administrador/admindex.php">Início</a>
         <a href="listagem.php">Produtos</a>
         <a href="../administrador/usuarios.php">Usuários</a>
         <a href="../usuarios/logout.php">Sair</a>
