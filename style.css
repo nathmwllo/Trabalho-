@@ -618,3 +618,74 @@ footer {
     padding: 10px;
     margin-top: 10px;
 }
+.card-intro {
+    max-width: 380px;
+    min-height: 420px;
+    margin: 20px 0 30px 0;
+    padding: 30px 24px;
+    text-align: left;
+    background: #eee8d8;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.card-intro h2 {
+    text-align: left;
+    font-size: 24px;
+    margin: 0 0 18px 0;
+}
+
+.card-intro p {
+    margin: 0 0 16px 0;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #444;
+}
+
+.botao-intro {
+    text-decoration: none;
+    color: #5a2929;
+}
+
+.contato-intro {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 2px solid #00000030;
+}
+
+.contato-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #5a2929;
+}
+
+.contato-item img {
+    width: 15px;
+    height: 15px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.card-edicao {
+    max-width: 600px;
+    min-height: 0;
+}
+
+.card-intro textarea {
+    width: 100%;
+    min-height: 260px;
+    padding: 12px;
+    border: 3px solid black;
+    border-radius: 8px;
+    background: #eee9dd;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    resize: vertical;
+}

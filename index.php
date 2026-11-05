@@ -1,5 +1,13 @@
 <?php
 session_start();
+
+$arquivo = __DIR__ . "/texto_intro.txt";
+$textoIntro = file_exists($arquivo)
+    ? file_get_contents($arquivo)
+    : "Entre em um universo repleto de aventuras, ação e personagens extraordinários! Aqui na HQ Mania, você pode explorar o mundo dos quadrinhos, conhecer grandes heróis e descobrir histórias incríveis.
+    Seja você fã dos heróis clássicos ou dos personagens mais recentes, temos um universo de possibilidades esperando por você.
+    Prepare-se para muita emoção, poderes e aventuras. Na HQ Mania, toda história tem um herói!
+    Explore o catálogo, pesquise por título ou editora e monte a sua coleção. Boas leituras!";
 ?>
 
 <!DOCTYPE html>
@@ -64,6 +72,7 @@ nav .dropdown a:hover {
 nav .dropdown a + a {
     border-top: 1px solid #00000030;
 }
+
 </style>
 <body>
 
@@ -101,9 +110,26 @@ nav .dropdown a + a {
         </div>
     
         <main>
+     <section class="card-intro">
         <h2>Bem-vindo à HQ Mania!</h2>
-        <p style="text-align: center;">Seja Bem-Vindo(a) ao seu universo de quadrinhos!</p>
-    </main>
+
+        <?php foreach (preg_split('/\R{2,}/', $textoIntro) as $paragrafo): ?>
+            <p><?= nl2br(htmlspecialchars($paragrafo)) ?></p>
+        <?php endforeach; ?>
+
+        <a href="produtos/catalogo.php" class="botao-intro">Ver catálogo</a>
+
+        <div class="contato-intro">
+            <div class="contato-item">
+                <img src="img/logo_insta.png" alt="Instagram">
+                <span>@hqmania.oficial</span>
+            </div>
+            <div class="contato-item">
+                <img src="img/telefone.png" alt="Telefone">
+                <span>(51) 99999-0000</span>
+            </div>
+        </div>
+</main>
 
     <footer>
     </footer>
