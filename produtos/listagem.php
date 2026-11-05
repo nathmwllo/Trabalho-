@@ -24,7 +24,25 @@ if (!$resultado) {
     <link rel="stylesheet" href="../style.css">
 
 </head>
+<style>
+    .botao-cadastrar {
+    display: inline-block;
+    margin: 10px 0 15px;
+    padding: 8px 14px;
+    background: #9d8b55;
+    color: white;
+    border: 2px solid black;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+}
 
+.botao-cadastrar:hover {
+    background: #8e773f;
+    color: #111;
+}
+</style>
 <body>
     <header>
     <img src="../img/logo.png" alt="">
@@ -40,7 +58,7 @@ if (!$resultado) {
     <main class="pagina-usuarios">
         <h1>Gerenciar Produtos</h1>
         <div class="topo">
-            <a class="botao" href="cadastro_produtos.php">
+            <a class="botao-cadastrar" href="cadastro_produtos.php">
                 Cadastrar novo produto
             </a>
         </div>

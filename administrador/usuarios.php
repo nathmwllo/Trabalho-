@@ -65,7 +65,7 @@ $resultado = $stmt->get_result();
 <style>
     .voltar{
     padding: 12px 20px;
-    font-size: 14px;
+    font-size: 13px;
     background: #9d8b55;
     border: 3px solid black;
     border-radius: 8px;
@@ -74,6 +74,23 @@ $resultado = $stmt->get_result();
     text-decoration: none;
     color: #111;
     }
+    .botao-cadastrar {
+    display: inline-block;
+    margin: 10px 0 15px;
+    padding: 8px 14px;
+    background: #9d8b55;
+    color: white;
+    border: 2px solid black;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.botao-cadastrar:hover {
+    background: #8e773f;
+    color: #111;
+}
 </style>
 <body>
 
@@ -95,7 +112,6 @@ $resultado = $stmt->get_result();
 <main class="pagina-usuarios">
 
     <h2>ADMINISTRAÇÃO DE USUÁRIOS</h2>
-    <a href="cadastro_adm.php" style="text-decoration:none ; text-align:left;">Cadastrar novo usuário</a>
     <form method="GET" class="pesquisa">
 
         <input type="text" name="pesquisa" placeholder="Pesquisar por nome ou e-mail" value="<?= $pesquisa ?>">
@@ -109,7 +125,7 @@ $resultado = $stmt->get_result();
     </form>
 
     <div class="tabela">
-
+    <a href="cadastro_adm.php" class="botao-cadastrar">Cadastrar novo usuário</a>
         <table>
             <thead>
                 <tr>

@@ -91,7 +91,7 @@ nav .dropdown a + a {
 }
     .voltar{
     padding: 12px 20px;
-    font-size: 14px;
+    font-size: 13px;
     background: #9d8b55;
     border: 3px solid black;
     border-radius: 8px;
