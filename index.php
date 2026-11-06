@@ -1,6 +1,9 @@
 <?php
 session_start();
 
+require_once __DIR__ . "/conexao.php";
+$lancamentos = $conexao->query("SELECT * FROM produtos ORDER BY id_produto DESC LIMIT 6");
+
 $arquivo = __DIR__ . "/texto_intro.txt";
 $textoIntro = file_exists($arquivo)
     ? file_get_contents($arquivo)
@@ -110,25 +113,45 @@ nav .dropdown a + a {
         </div>
     
         <main>
-     <section class="card-intro">
-        <h2>Bem-vindo à HQ Mania!</h2>
+    <div class="home-layout">
 
-        <?php foreach (preg_split('/\R{2,}/', $textoIntro) as $paragrafo): ?>
-            <p><?= nl2br(htmlspecialchars($paragrafo)) ?></p>
-        <?php endforeach; ?>
+        <section class="card-intro">
+            <h2>Bem-vindo à HQ Mania!</h2>
+            <?php foreach (preg_split('/\R{2,}/', $textoIntro) as $paragrafo): ?>
+                <p><?= nl2br(htmlspecialchars($paragrafo)) ?></p>
+            <?php endforeach; ?>
 
-        <a href="produtos/catalogo.php" class="botao-intro">Ver catálogo</a>
+            <a href="produtos/catalogo.php" class="botao-intro">Ver catálogo</a>
 
-        <div class="contato-intro">
-            <div class="contato-item">
-                <img src="img/logo_insta.png" alt="Instagram">
-                <span>@hqmania.oficial</span>
+            <div class="contato-intro">
+                <div class="contato-item">
+                    <img src="img/logo_insta.png" alt="Instagram">
+                    <span>@hqmania.oficial</span>
+                </div>
+                <div class="contato-item">
+                    <img src="img/telefone.png" alt="Telefone">
+                    <span>(51) 99999-0000</span>
+                </div>
             </div>
-            <div class="contato-item">
-                <img src="img/telefone.png" alt="Telefone">
-                <span>(51) 99999-0000</span>
+        </section>
+
+        <section class="lancamentos">
+            <h2>Lançamentos</h2>
+            <div class="catalogo">
+                <?php while ($produto = $lancamentos->fetch_assoc()): ?>
+                    <div>
+                        <?php if (!empty($produto["imagem"])): ?>
+                            <img src="produtos/<?= htmlspecialchars($produto['imagem']) ?>" alt="Capa">
+                        <?php endif; ?>
+                        <h3><?= htmlspecialchars($produto["nome_produto"]) ?></h3>
+                        <p>Edição: <?= htmlspecialchars($produto["edicao"]) ?></p>
+                        <p>Preço: R$ <?= number_format($produto["preco"], 2, ",", ".") ?></p>
+                        <p><?= $produto["estoque"] > 0 ? "Disponível em estoque" : "Indisponível em estoque" ?></p>
+                    </div>
+                <?php endwhile; ?>
             </div>
-        </div>
+        </section>
+    </div>
 </main>
 
     <footer>

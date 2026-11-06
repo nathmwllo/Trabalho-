@@ -6,12 +6,11 @@ if (!isset($_SESSION["id_usuario"])) {
     header("Location: ../usuarios/login.php");
     exit;
 }
-
 if ($_SESSION["cargo"] != "Administrador") {
     header("Location: ../index.php");
     exit;
 }
-// ===== Texto de introdução =====
+
 $arquivo = __DIR__ . "/../texto_intro.txt";
 $erro = "";
 
@@ -38,6 +37,9 @@ if ($erro !== "") {
     Prepare-se para muita emoção, poderes e aventuras. Na HQ Mania, toda história tem um herói!
     Explore o catálogo, pesquise por título ou editora e monte a sua coleção. Boas leituras!";
 }
+
+require_once "../conexao.php";
+$poucoEstoque = $conexao->query("SELECT * FROM produtos WHERE estoque <= 4 ORDER BY estoque ASC, nome_produto ASC");
 ?>
 
 <!DOCTYPE html>
@@ -94,29 +96,59 @@ if ($erro !== "") {
         <h2>Área do Administrador</h2>
         <p style="text-align: center;">Seja Bem-Vindo(a) a sua área de administração! <br> Aqui você pode administrar os usuários e os produtos cadastrados em seu site.</p>
 
-        <div class="acoes-admin">
+                <div class="acoes-admin">
             <a href="cadastro_adm.php"><button class="botao-admin">Cadastrar Usuário</button></a>
             <a href="../produtos/cadastro_produtos.php"><button class="botao-admin">Cadastrar HQ</button></a>
         </div>
-        <section class="card-intro card-edicao">
-            <h2>Texto de introdução</h2>
 
-            <?php if (isset($_GET["salvo"])): ?>
-                <p class="mensagem">Texto atualizado com sucesso!</p>
-            <?php endif; ?>
+        <div class="admin-layout">
 
-            <?php if ($erro !== ""): ?>
-                <p class="mensagem"><?= htmlspecialchars($erro) ?></p>
-            <?php endif; ?>
+            <section class="card-intro card-edicao">
+                <h2>Texto de introdução</h2>
 
-            <form method="post">
-                <textarea name="texto_intro"><?= htmlspecialchars($textoAtual) ?></textarea>
-                <p></p>
-                <button type="submit" class="botao-texto">Salvar texto</button>
-            </form>
-        </section>
+                <?php if (isset($_GET["salvo"])): ?>
+                    <p class="mensagem">Texto atualizado com sucesso!</p>
+                <?php endif; ?>
+
+                <?php if ($erro !== ""): ?>
+                    <p class="mensagem"><?= htmlspecialchars($erro) ?></p>
+                <?php endif; ?>
+
+                <form method="post">
+                    <textarea name="texto_intro"><?= htmlspecialchars($textoAtual) ?></textarea>
+                    <p></p>
+                    <button type="submit" class="botao-texto">Salvar texto</button>
+                </form>
+            </section>
+
+            <section class=" card-estoque">
+                <h2>Produtos Precisando de Reposição </h2>
+
+                <?php if ($poucoEstoque->num_rows > 0): ?>
+                    <div class="catalogo">
+                        <?php while ($produto = $poucoEstoque->fetch_assoc()): ?>
+                            <div>
+                                <?php if (!empty($produto["imagem"])): ?>
+                                    <img src="../produtos/<?= htmlspecialchars($produto['imagem']) ?>" alt="Capa">
+                                <?php endif; ?>
+                                <h3><?= htmlspecialchars($produto["nome_produto"]) ?></h3>
+                                <p>Edição: <?= htmlspecialchars($produto["edicao"]) ?></p>
+                                <p>Preço: R$ <?= number_format($produto["preco"], 2, ",", ".") ?></p>
+                                <?php if ($produto["estoque"] > 0): ?>
+                                    <p class="alerta-estoque">Restam apenas <?= (int) $produto["estoque"] ?> em estoque</p>
+                                <?php else: ?>
+                                    <p class="alerta-estoque">Fora de estoque</p>
+                                <?php endif; ?>
+                            </div>
+                        <?php endwhile; ?>
+                    </div>
+                <?php else: ?>
+                    <p style="text-align: center;">Nenhum produto com estoque baixo no momento.</p>
+                <?php endif; ?>
+            </section>
+
+        </div>
     </main>
-
     <footer>
     </footer>
 
