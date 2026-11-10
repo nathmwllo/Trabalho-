@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 require_once("../conexao.php");
@@ -10,55 +9,67 @@ if (!isset($_SESSION["id_usuario"])) {
 
 $id_usuario = $_SESSION["id_usuario"];
 
-$sql = "SELECT * FROM usuarios WHERE id_usuario = ?";
-$stmt = $conexao->prepare($sql);
-$stmt->bind_param("i", $id_usuario);
-$stmt->execute();
-
-$resultado = $stmt->get_result();
+$sql = "SELECT * FROM usuarios WHERE id_usuario = $id_usuario";
+$resultado = $conexao->query($sql);
 $usuario = $resultado->fetch_assoc();
 
-$stmt->close();
+$pesquisa = $_GET["pesquisa"] ?? "";
 
-$pesquisa = trim($_GET["pesquisa"] ?? "");
+$sql = "SELECT * FROM pedido WHERE id_usuario = $id_usuario ORDER BY id_pedido DESC";
+$resultado = $conexao->query($sql);
 
-$sql = "SELECT * FROM pedido WHERE id_usuario = ?";
+$pedidos = [];
 
-if ($pesquisa != "") {
+while ($pedido = $resultado->fetch_assoc()) {
 
-    if (is_numeric($pesquisa)) {
-        $sql .= " AND id_pedido = ?";
-        $stmt = $conexao->prepare($sql);
-        $numero = (int) $pesquisa;
-        $stmt->bind_param("ii", $id_usuario, $numero);
+    $encontrou = false;
 
-    } else {
-        $data = DateTime::createFromFormat("!d/m/Y", $pesquisa);
+    if ($pesquisa == "" ||
+        stripos($pedido["id_pedido"], $pesquisa) !== false ||
+        stripos($pedido["data_pedido"], $pesquisa) !== false ||
+        stripos($pedido["status_pedido"], $pesquisa) !== false ||
+        stripos($pedido["valor_pedido"], $pesquisa) !== false) {
 
-        if ($data && $data->format("d/m/Y") == $pesquisa) {
-            $data = $data->format("Y-m-d");
-
-            $sql .= " AND DATE(data_pedido) = ?";
-            $stmt = $conexao->prepare($sql);
-            $stmt->bind_param("is", $id_usuario, $data);
-
-        } else {
-            $sql .= " AND 1 = 0";
-            $stmt = $conexao->prepare($sql);
-            $stmt->bind_param("i", $id_usuario);
-        }
+        $encontrou = true;
     }
 
-} else {
-    $stmt = $conexao->prepare($sql);
-    $stmt->bind_param("i", $id_usuario);
+    $id_pedido = $pedido["id_pedido"];
+
+    $sqlItens = "SELECT * FROM item_pedido WHERE id_pedido = $id_pedido";
+    $resultadoItens = $conexao->query($sqlItens);
+
+    $itens = [];
+
+    while ($item = $resultadoItens->fetch_assoc()) {
+
+        $id_produto = $item["id_produto"];
+
+        $sqlProduto = "SELECT * FROM produtos WHERE id_produto = $id_produto";
+        $resultadoProduto = $conexao->query($sqlProduto);
+
+        $produto = $resultadoProduto->fetch_assoc();
+
+        $item["nome_produto"] = $produto["nome_produto"] ?? "Produto não encontrado";
+
+        if ($pesquisa != "") {
+
+            if (
+                stripos($item["nome_produto"], $pesquisa) !== false ||
+                stripos($item["quantidade"], $pesquisa) !== false ||
+                stripos($item["preci_unit"], $pesquisa) !== false
+            ) {
+                $encontrou = true;
+            }
+        }
+
+        $itens[] = $item;
+    }
+
+    if ($encontrou) {
+        $pedido["itens"] = $itens;
+        $pedidos[] = $pedido;
+    }
 }
-
-$sql = " ORDER BY id_pedido DESC";
-
-$stmt->execute();
-$pedidos = $stmt->get_result();
-
 ?>
 
 <!DOCTYPE html>
@@ -70,24 +81,11 @@ $pedidos = $stmt->get_result();
     <title>Minha conta - HQ Mania</title>
     <link rel="stylesheet" href="../style.css">
 </head>
-<style>
-    .sair{
-    display: inline-block;
-    margin-top: 20px;
-    font-weight: bold;
-    text-decoration: none;
-    color: #111;
-    }
-    .sair:hover{
-        color: #6b2828;
-        text-decoration: underline;
-    }
-</style>
 
 <body>
 
 <header>
-        <img src="../img/logo.png" alt="Logo HQ Mania">
+    <img src="../img/logo.png" alt="Logo HQ Mania">
 
     <nav>
         <a href="../index.php">
@@ -117,15 +115,19 @@ $pedidos = $stmt->get_result();
     <h2>Minha conta</h2>
 
     <div class="colunas-perfil">
+
         <section class="caixa-perfil">
+
             <h3>Meus dados</h3>
-            <p><strong>Nome:</strong> <?= htmlspecialchars($usuario["nome"]) ?></p>
-            <p><strong>CPF:</strong> <?= htmlspecialchars($usuario["cpf"]) ?></p>
-            <p><strong>Data de nascimento:</strong>
-                <?= date("d/m/Y", strtotime($usuario["data_nasc"])) ?>
-            </p>
-            <p><strong>Telefone:</strong> <?= htmlspecialchars($usuario["telefone"]) ?></p>
-            <p><strong>E-mail:</strong> <?= htmlspecialchars($usuario["email"]) ?></p>
+
+            <?php
+            echo "<p><strong>Nome:</strong> " . htmlspecialchars($usuario["nome"]) . "</p>";
+            echo "<p><strong>CPF:</strong> " . htmlspecialchars($usuario["cpf"]) . "</p>";
+            echo "<p><strong>Data de nascimento:</strong> " . date("d/m/Y", strtotime($usuario["data_nasc"])) . "</p>";
+            echo "<p><strong>Telefone:</strong> " . htmlspecialchars($usuario["telefone"]) . "</p>";
+            echo "<p><strong>E-mail:</strong> " . htmlspecialchars($usuario["email"]) . "</p>";
+            ?>
+
             <div class="acoes-perfil">
                 <a href="editar_usuario.php" class="botao-perfil">
                     Editar dados
@@ -133,63 +135,78 @@ $pedidos = $stmt->get_result();
                 <a href="excluir_usuario.php" class="botao-excluir">
                     Excluir conta
                 </a>
-                <a href="logout.php" class="sair">Sair</a>
+                <a href="logout.php" class="sair">
+                    Sair
+                </a>
+
             </div>
+
         </section>
+
         <section class="caixa-compras">
+
             <h3>Minhas compras</h3>
+
             <form method="GET" action="perfil.php" class="pesquisa-compras">
-                <input type="text" name="pesquisa" placeholder="Pesquisar por número do pedido ou data" value="<?= htmlspecialchars($pesquisa) ?>">
+
+<input type="text" name="pesquisa" placeholder="Pesquisar compras..." value="<?php echo htmlspecialchars($pesquisa); ?>">
+
                 <button type="submit">Pesquisar</button>
-                <a href="perfil.php">Limpar</a>
+
+                <a href="perfil.php" style="font-size:13px;">Limpar</a>
+
             </form>
-            <?php if ($pedidos->num_rows > 0): ?>
-                <?php while ($pedido = $pedidos->fetch_assoc()): ?>
-                    <details class="pedido">
-                        <summary>
-                            Pedido #<?= $pedido["id_pedido"] ?>
-                            <?= date("d/m/Y", strtotime($pedido["data_pedido"])) ?>
-                            R$ <?= number_format($pedido["valor_pedido"], 2, ",", ".") ?>
-                        </summary>
-                        <p><strong>Status:</strong><?= htmlspecialchars($pedido["status_pedido"]) ?></p>
+
+            <?php if (count($pedidos) > 0): ?>
+
+                <?php foreach ($pedidos as $pedido): ?>
+
+                    <div class="pedido">
+
+                        <h4>Pedido #<?php echo $pedido["id_pedido"]; ?></h4>
+
+                        <?php
+                        echo "<p><strong>Data:</strong> " . date("d/m/Y", strtotime($pedido["data_pedido"])) . "</p>";
+
+                        echo "<p><strong>Valor:</strong> R$ " . number_format($pedido["valor_pedido"], 2, ",", ".") . "</p>";
+
+                        echo "<p><strong>Status:</strong> " . htmlspecialchars($pedido["status_pedido"]) . "</p>";
+                        ?>
+
                         <h4>Produtos comprados</h4>
-                        <div class="lista-itens">
-                            <?php
-                            $id_pedido = $pedido["id_pedido"];
-                            $sqlItens = "SELECT * FROM item_pedido WHERE id_pedido = ?";
-                            $stmtItens = $conexao->prepare($sqlItens);
-                            $stmtItens->bind_param("i", $id_pedido);
-                            $stmtItens->execute();
-                            $itens = $stmtItens->get_result();
-                            ?>
-                            <?php while ($item = $itens->fetch_assoc()): ?>
+
+                        <?php foreach ($pedido["itens"] as $item): ?>
+
+                            <div class="item-compra">
+
                                 <?php
-                                $id_produto = $item["id_produto"];
-                                $sqlProduto = "SELECT nome_produto FROM produtos WHERE id_produto = ?";
-                                $stmtProduto = $conexao->prepare($sqlProduto);
-                                $stmtProduto->bind_param("i", $id_produto);
-                                $stmtProduto->execute();
-                                $produto = $stmtProduto->get_result()->fetch_assoc();
-                                $stmtProduto->close();
+                                echo "<p><strong>Produto:</strong> " . htmlspecialchars($item["nome_produto"]) . "</p>";
+
+                                echo "<p><strong>Quantidade:</strong> " . htmlspecialchars($item["quantidade"]) . "</p>";
+
+                                echo "<p><strong>Preço unitário:</strong> R$ " . number_format($item["preci_unit"], 2, ",", ".") . "</p>";
+
+                                echo "<p><strong>Subtotal:</strong> R$ " . number_format($item["valor_pedido"], 2, ",", ".") . "</p>";
                                 ?>
-                                <div class="item-compra">
-                                    <p><strong>Produto:</strong><?= htmlspecialchars($produto["nome_produto"] ?? "Produto não encontrado") ?></p>
-                                    <p><strong>Quantidade:</strong><?= $item["quantidade"] ?></p>
-                                    <p><strong>Preço unitário:</strong>R$ <?= number_format($item["preci_unit"], 2, ",", ".") ?></p>
-                                    <p><strong>Subtotal:</strong>R$ <?= number_format($item["valor_pedido"], 2, ",", ".") ?></p>
-                                </div>
-                            <?php endwhile; ?>
-                            <?php $stmtItens->close(); ?>
-                        </div>
-                    </details>
-                <?php endwhile; ?>
+
+                            </div>
+
+                        <?php endforeach; ?>
+
+                    </div>
+
+                <?php endforeach; ?>
+
             <?php else: ?>
+
                 <p>Nenhuma compra encontrada.</p>
+
             <?php endif; ?>
+
         </section>
+
     </div>
 
-    <?php $stmt->close(); ?>
 </main>
 
 <footer></footer>

@@ -2,6 +2,16 @@
 session_start();
 require_once "../conexao.php";
 
+if (isset($_POST["adicionar"])) {
+    if (!isset($_SESSION["id_usuario"])) {
+        echo "<script>alert('Você precisa estar logado para adicionar produtos ao carrinho!');</script>";
+    } else {
+        $_SESSION["produto_adicionar"] = (int) $_POST["id_produto"];
+        header("Location: ../carrinho/carrinho.php");
+        exit;
+    }
+}
+
 $pesquisa = trim($_GET["pesquisa"] ?? "");
 
 $sql = "SELECT * FROM produtos
@@ -112,7 +122,7 @@ nav .dropdown a + a {
                     <img src="../img/inicio.png" alt="inicio"><span>Início</span></a>
                 <a href="catalogo.php">
                     <img src="../img/catalogo.png" alt="catálogo">Catálogo</a>
-                <a href="#">
+                <a href="../carrinho/carrinho.php">
                     <img src="../img/carrinho.png" alt="">Carrinho</a>
                  <div class="perfil-menu">
                    <a href="../usuarios/perfil.php" id="btn-perfil"><img src="../img/perfil.png" alt="perfil">Perfil</a>
@@ -152,11 +162,10 @@ nav .dropdown a + a {
                     <p>Preço: R$ <?= number_format($produto["preco"], 2, ",", ".") ?></p>
                     <?php if ($produto["estoque"] > 0): ?>
                         <p>Disponível em estoque</p>
-                        <form action="adicionar_carrinho.php" method="POST">
-                            <input type="hidden" name="id_produto" value="<?= (int) $produto["id_produto"] ?>">
-                            <input type="hidden" name="quantidade" value="1">
-                            <button type="submit">Adicionar ao carrinho</button>
-                        </form>
+                       <form action="" method="POST">
+                               <input type="hidden" name="id_produto" value="<?php echo $produto["id_produto"]; ?>">
+                               <button type="submit" name="adicionar">Adicionar ao carrinho</button>
+</form>
                     <?php else: ?>
                         <p>Indisponível em estoque</p>
                     <?php endif; ?>
