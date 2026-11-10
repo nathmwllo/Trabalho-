@@ -2,6 +2,17 @@
 session_start();
 
 require_once __DIR__ . "/conexao.php";
+$aviso = "";
+if (isset($_POST["adicionar"])) {
+    if (!isset($_SESSION["id_usuario"])) {
+        $aviso = "Você precisa estar logado para adicionar produtos ao carrinho!";
+    } else {
+        $_SESSION["produto_adicionar"] = (int) $_POST["id_produto"];
+        header("Location: carrinho/carrinho.php");
+        exit;
+    }
+}
+
 $lancamentos = $conexao->query("SELECT * FROM produtos ORDER BY id_produto DESC LIMIT 6");
 
 $arquivo = __DIR__ . "/texto_intro.txt";
@@ -78,6 +89,9 @@ nav .dropdown a + a {
 
 </style>
 <body>
+    <?php if ($aviso): ?>
+    <script>alert(<?= json_encode($aviso, JSON_UNESCAPED_UNICODE) ?>);</script>
+    <?php endif; ?>
 
     <header>
         <img src="img/logo.png" alt="logo">
@@ -146,8 +160,15 @@ nav .dropdown a + a {
                         <h3><?= htmlspecialchars($produto["nome_produto"]) ?></h3>
                         <p>Edição: <?= htmlspecialchars($produto["edicao"]) ?></p>
                         <p>Preço: R$ <?= number_format($produto["preco"], 2, ",", ".") ?></p>
-                        <p><?= $produto["estoque"] > 0 ? "Disponível em estoque" : "Indisponível em estoque" ?></p>
-                    </div>
+                        <?php if ($produto["estoque"] > 0): ?>
+                        <p>Disponível em estoque</p>
+                        <form action="" method="POST">
+                            <input type="hidden" name="id_produto" value="<?= (int) $produto["id_produto"] ?>">
+                            <button type="submit" name="adicionar">Adicionar ao carrinho</button>
+                        </form>
+                    <?php else: ?>
+                        <p>Indisponível em estoque</p>
+                    <?php endif; ?>
                 <?php endwhile; ?>
             </div>
         </section>
