@@ -81,7 +81,17 @@ while ($pedido = $resultado->fetch_assoc()) {
     <title>Minha conta - HQ Mania</title>
     <link rel="stylesheet" href="../style.css">
 </head>
-
+<style>
+    .sair{
+        text-decoration: none;
+        color: black;
+        font-weight: bold;
+    }
+    .sair:hover{
+        color: #5a2929;
+        text-decoration: underline;
+    }
+</style>
 <body>
 
 <header>
@@ -98,7 +108,7 @@ while ($pedido = $resultado->fetch_assoc()) {
             <span>Catálogo</span>
         </a>
 
-        <a href="carrinho.php">
+        <a href="../carrinho/carrinho.php">
             <img src="../img/carrinho.png" alt="">
             <span>Carrinho</span>
         </a>

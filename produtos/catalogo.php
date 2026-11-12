@@ -2,14 +2,25 @@
 session_start();
 require_once "../conexao.php";
 
-if (isset($_POST["adicionar"])) {
+require_once "../carrinho/carrinho_funcoes.php";
+
+if (isset($_POST["adicionar_ajax"])) {
+    header("Content-Type: application/json; charset=utf-8");
+
     if (!isset($_SESSION["id_usuario"])) {
-        echo "<script>alert('Você precisa estar logado para adicionar produtos ao carrinho!');</script>";
-    } else {
-        $_SESSION["produto_adicionar"] = (int) $_POST["id_produto"];
-        header("Location: ../carrinho/carrinho.php");
+        echo json_encode(["mensagem" => "Você precisa estar logado para adicionar produtos ao carrinho!"], JSON_UNESCAPED_UNICODE);
         exit;
     }
+
+    $carrinho = new Carrinho($conexao, $_SESSION["id_usuario"]);
+    $ok = $carrinho->adicionar((int) $_POST["id_produto"]) !== false;
+
+    echo json_encode([
+        "mensagem" => $ok
+            ? "Produto adicionado ao carrinho!"
+            : "Não foi possível adicionar: não há mais unidades em estoque."
+    ], JSON_UNESCAPED_UNICODE);
+    exit;
 }
 
 $pesquisa = trim($_GET["pesquisa"] ?? "");
@@ -110,6 +121,31 @@ nav .dropdown a + a {
     text-decoration: none;
     color: #111;
     }
+
+    .aviso {
+        position: fixed;
+        right: 30px;
+        bottom: 30px;
+        max-width: 320px;
+        padding: 20px 28px;
+        background: #c9b896;
+        color: #5b2222;
+        border: 3px solid #000;
+        border-radius: 10px;
+        box-shadow: 4px 4px 0 #000;
+        font-weight: bold;
+        text-align: center;
+        opacity: 0;
+        transform: translateY(20px);
+        pointer-events: none;
+        transition: opacity 0.3s, transform 0.3s;
+        z-index: 1000;
+    }
+
+    .aviso.visivel {
+        opacity: 1;
+        transform: translateY(0);
+    }
 </style>
 <body>
 
@@ -162,7 +198,7 @@ nav .dropdown a + a {
                     <p>Preço: R$ <?= number_format($produto["preco"], 2, ",", ".") ?></p>
                     <?php if ($produto["estoque"] > 0): ?>
                         <p>Disponível em estoque</p>
-                       <form action="" method="POST">
+                       <form method="POST" class="form-adicionar">
                                <input type="hidden" name="id_produto" value="<?php echo $produto["id_produto"]; ?>">
                                <button type="submit" name="adicionar">Adicionar ao carrinho</button>
 </form>
@@ -187,6 +223,8 @@ nav .dropdown a + a {
 </main>
 <footer></footer>
 
+<div class="aviso" id="aviso" role="status" aria-live="polite"></div>
+
 <script>
     const btnPerfil = document.getElementById('btn-perfil');
     const dropdown = document.getElementById('dropdown-perfil');
@@ -200,6 +238,34 @@ nav .dropdown a + a {
         if (!e.target.closest('.perfil-menu')) {
             dropdown.classList.remove('aberto');
         }
+    });
+
+
+    let timerAviso;
+    function mostrarAviso(texto) {
+        const aviso = document.getElementById('aviso');
+        aviso.textContent = texto;
+        aviso.classList.add('visivel');
+        clearTimeout(timerAviso);
+        timerAviso = setTimeout(() => aviso.classList.remove('visivel'), 2500);
+    }
+
+    document.querySelectorAll('.form-adicionar').forEach(form => {
+        form.addEventListener('submit', async e => {
+            e.preventDefault();
+            const dados = new URLSearchParams({
+                adicionar_ajax: 1,
+                id_produto: form.querySelector('[name="id_produto"]').value
+            });
+
+            try {
+                const r = await fetch('catalogo.php', { method: 'POST', body: dados });
+                const res = await r.json();
+                mostrarAviso(res.mensagem);
+            } catch (erro) {
+                mostrarAviso('Não foi possível adicionar o produto ao carrinho.');
+            }
+        });
     });
 </script>
 
