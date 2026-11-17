@@ -98,7 +98,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <header>
 
-<h1>HQ MANIA</h1>
+<img src="../img/logo.png" alt="logo">
 
 <nav>
 
@@ -116,7 +116,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <h2>EDITAR USUÁRIO</h2>
 
 
-<form method="POST" class="form-editar">
+<form method="POST" class="formulario">
 
 <label>Nome</label>
 
