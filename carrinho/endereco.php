@@ -73,12 +73,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastrar endereço - HQ Mania</title>
     <link rel="stylesheet" href="../style.css">
-    <style>
-        main { max-width: 650px; margin: 35px auto; padding: 0 20px; }
-        .campo-endereco { display: flex; flex-direction: column; margin-bottom: 13px; }
-        .campo-endereco input { padding: 10px; }
-        .mensagem-erro { color: #b00020; margin-bottom: 15px; }
-    </style>
 </head>
 <body>
 <header>
@@ -91,64 +85,66 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </nav>
 </header>
 
-<main>
-    <h2>Cadastrar endereço de entrega</h2>
+<main class="pagina-endereco">
+    <h2>Novo Endereço</h2>
 
-    <?php if ($erro !== ""): ?>
-        <p class="mensagem-erro"><?php echo htmlspecialchars($erro); ?></p>
-    <?php endif; ?>
+    <div class="cartao-endereco">
+        <?php if ($erro !== ""): ?>
+            <p class="mensagem-erro"><?php echo htmlspecialchars($erro); ?></p>
+        <?php endif; ?>
 
-    <form method="POST" action="endereco.php?novo=1">
-        <div class="campo-endereco">
-            <label for="nome_endereco">Nome do endereço (ex.: Casa ou Trabalho)</label>
-            <input type="text" id="nome_endereco" name="nome_endereco"
-                   value="<?php echo htmlspecialchars($_POST["nome_endereco"] ?? ""); ?>" required>
-        </div>
+        <form method="POST" action="endereco.php?novo=1" class="grade-endereco">
+            <div class="campo-endereco">
+                <label for="nome_endereco">Nome do endereço</label>
+                <input type="text" id="nome_endereco" name="nome_endereco" placeholder="Casa ou Trabalho"
+                       value="<?php echo htmlspecialchars($_POST["nome_endereco"] ?? ""); ?>" required>
+            </div>
 
-        <div class="campo-endereco">
-            <label for="cep">CEP</label>
-            <input type="text" id="cep" name="cep" placeholder="00000-000"
-                   maxlength="9" value="<?php echo htmlspecialchars($_POST["cep"] ?? ""); ?>" required>
-        </div>
+            <div class="campo-endereco">
+                <label for="cep">CEP</label>
+                <input type="text" id="cep" name="cep" placeholder="00000-000" maxlength="9"
+                       value="<?php echo htmlspecialchars($_POST["cep"] ?? ""); ?>" required>
+            </div>
 
-        <div class="campo-endereco">
-            <label for="rua">Rua</label>
-            <input type="text" id="rua" name="rua"
-                   value="<?php echo htmlspecialchars($_POST["rua"] ?? ""); ?>" required>
-        </div>
+            <div class="campo-endereco">
+                <label for="rua">Rua</label>
+                <input type="text" id="rua" name="rua"
+                       value="<?php echo htmlspecialchars($_POST["rua"] ?? ""); ?>" required>
+            </div>
 
-        <div class="campo-endereco">
-            <label for="numero">Número</label>
-            <input type="text" id="numero" name="numero"
-                   value="<?php echo htmlspecialchars($_POST["numero"] ?? ""); ?>" required>
-        </div>
+            <div class="campo-endereco">
+                <label for="numero">Número</label>
+                <input type="text" id="numero" name="numero"
+                       value="<?php echo htmlspecialchars($_POST["numero"] ?? ""); ?>" required>
+            </div>
 
-        <div class="campo-endereco">
-            <label for="complemento">Complemento</label>
-            <input type="text" id="complemento" name="complemento"
-                   value="<?php echo htmlspecialchars($_POST["complemento"] ?? ""); ?>">
-        </div>
+            <div class="campo-endereco">
+                <label for="complemento">Complemento</label>
+                <input type="text" id="complemento" name="complemento"
+                       value="<?php echo htmlspecialchars($_POST["complemento"] ?? ""); ?>">
+            </div>
 
-        <div class="campo-endereco">
-            <label for="bairro">Bairro</label>
-            <input type="text" id="bairro" name="bairro"
-                   value="<?php echo htmlspecialchars($_POST["bairro"] ?? ""); ?>" required>
-        </div>
+            <div class="campo-endereco">
+                <label for="bairro">Bairro</label>
+                <input type="text" id="bairro" name="bairro"
+                       value="<?php echo htmlspecialchars($_POST["bairro"] ?? ""); ?>" required>
+            </div>
 
-        <div class="campo-endereco">
-            <label for="cidade">Cidade</label>
-            <input type="text" id="cidade" name="cidade"
-                   value="<?php echo htmlspecialchars($_POST["cidade"] ?? ""); ?>" required>
-        </div>
+            <div class="campo-endereco">
+                <label for="cidade">Cidade</label>
+                <input type="text" id="cidade" name="cidade"
+                       value="<?php echo htmlspecialchars($_POST["cidade"] ?? ""); ?>" required>
+            </div>
 
-        <div class="campo-endereco">
-            <label for="estado">Estado (UF)</label>
-            <input type="text" id="estado" name="estado" maxlength="2"
-                   value="<?php echo htmlspecialchars($_POST["estado"] ?? ""); ?>" required>
-        </div>
+            <div class="campo-endereco">
+                <label for="estado">Estado (UF)</label>
+                <input type="text" id="estado" name="estado" maxlength="2"
+                       value="<?php echo htmlspecialchars($_POST["estado"] ?? ""); ?>" required>
+            </div>
 
-        <button type="submit">Salvar endereço e continuar</button>
-    </form>
+            <button type="submit" class="botao-endereco">Salvar e continuar</button>
+        </form>
+    </div>
 </main>
 
 <script>

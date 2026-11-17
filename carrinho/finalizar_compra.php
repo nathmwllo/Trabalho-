@@ -117,12 +117,6 @@ if (count($enderecos) === 0) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Endereço de entrega - HQ Mania</title>
     <link rel="stylesheet" href="../style.css">
-    <style>
-        main { max-width: 900px; margin: 35px auto; padding: 0 20px; }
-        .endereco-opcao { display: block; padding: 14px 0; border-bottom: 1px solid #ddd; }
-        .endereco-opcao p { margin: 6px 0 0 25px; }
-        .acoes { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 22px; }
-    </style>
 </head>
 <body>
 <header>
@@ -135,7 +129,7 @@ if (count($enderecos) === 0) {
     </nav>
 </header>
 
-<main>
+<main class="pagina-finalizar">
     <h2>Escolha o endereço de entrega</h2>
 
     <form method="POST" action="finalizar_compra.php">
@@ -160,10 +154,8 @@ if (count($enderecos) === 0) {
             </label>
         <?php endforeach; ?>
 
-        <div class="acoes">
-            <button type="submit">Usar este endereço e finalizar compra</button>
-            <a href="endereco.php?novo=1">Cadastrar novo endereço</a>
-        </div>
+        <button type="submit">Usar este endereço e finalizar compra</button>
+        <a href="endereco.php?novo=1">Cadastrar novo endereço</a>
     </form>
 
     <p>Frete: grátis para todo o Brasil.</p>

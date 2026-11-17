@@ -55,8 +55,13 @@ foreach ($itens as $item) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carrinho - HQ Mania</title>
     <link rel="stylesheet" href="../style.css">
-
 </head>
+    <style>
+        .frete{
+            color: #507641; 
+            font-weight: bold;
+        }
+    </style>
 <body>
 
 <?php if (isset($_SESSION["aviso"])): ?>
@@ -99,7 +104,7 @@ foreach ($itens as $item) {
                             <p class="preco-produto">R$ <?php echo number_format($item["preco"], 2, ",", "."); ?></p>
 
                             <div class="linha-produto">
-                                <label class="quantidade">Qtd:
+                                <label class="quantidade">Quantidade:
                                     <input type="number"
                                            class="campo-quantidade"
                                            data-preco="<?php echo (float) $item["preco"]; ?>"
@@ -129,14 +134,15 @@ foreach ($itens as $item) {
                 <h3>Resumo do pedido</h3>
 
                 <div class="linha-resumo">
-                    <span>Itens</span>
+                    <span>Total de Itens:</span>
                     <span><?php echo count($itens); ?></span>
                 </div>
 
                 <p class="total-carrinho">
-                    <span>Total</span>
+                    <span>Total do Pedido:</span>
                     <strong>R$ <span id="total-carrinho"><?php echo number_format($total, 2, ",", "."); ?></span></strong>
                 </p>
+                <p class="frete">Frete: Grátis para todo o Brasil!</p>
 
                 <button type="submit" class="botao-finalizar">Finalizar compra</button>
             </aside>

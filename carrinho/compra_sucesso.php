@@ -36,11 +36,13 @@ unset($_SESSION["pedido_finalizado"], $_SESSION["mensagem_compra"]);
 </header>
 
 <main>
-    <h1><?php echo htmlspecialchars($mensagem); ?></h1>
-    <p>Seu pedido foi registrado na HQ Mania.</p>
-    <p>Número do pedido: <strong><?php echo $idPedido; ?></strong></p>
-    <p>Frete grátis para todo o Brasil!</p>
-    <a href="../index.php">Voltar para a página inicial</a>
+    <div class="cartao-sucesso">
+        <h1><?php echo htmlspecialchars($mensagem); ?></h1>
+        <p>Seu pedido foi registrado na HQ Mania.</p>
+        <p>Número do pedido: <strong><?php echo $idPedido; ?></strong></p>
+        <p>Frete grátis para todo o Brasil!</p>
+        <a href="../index.php">Voltar para a página inicial</a>
+    </div>
 </main>
 </body>
 </html>
