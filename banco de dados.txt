@@ -1,0 +1,115 @@
+create database hq_mania;
+use hq_mania;
+
+create table usuarios(
+id_usuario int primary key not null auto_increment,
+nome text,
+cpf varchar(11),
+data_nasc date,
+telefone text,
+email text,
+verificado boolean default false,
+senha varchar(255),
+cargo text
+);
+
+create table produtos(
+id_produto int primary key not null auto_increment,
+nome_produto text,
+preco decimal(10.2),
+estoque text, 
+imagem text
+);
+
+create table pedido(
+id_pedido int primary key not null auto_increment,
+id_usuario int,
+data_pedido date,
+valor_pedido decimal(10.2),
+status_pedido text,
+foreign key (id_usuario) references usuarios(id_usuario)
+);
+
+create table carrinho(
+id_carrinho int primary key not null auto_increment,
+data_carrinho date,
+id_usuario int,
+foreign key (id_usuario) references usuarios(id_usuario)
+);
+
+create table item_pedido(
+id_pedido int,
+id_produto int,
+quantidade text,
+valor_pedido decimal(10.2),
+preci_unit decimal(10.2),
+foreign key (id_pedido) references pedido(id_pedido),
+foreign key (id_produto) references produtos(id_produto)
+);
+
+create table item_carrinho(
+id_carrinho int, 
+id_produto int, 
+quantidade text,
+foreign key (id_carrinho) references carrinho(id_carrinho),
+foreign key (id_produto) references produtos(id_produto)
+);
+
+insert into usuarios(nome, cpf, data_nasc, telefone, email, senha, cargo)
+values ('administrador', '00000000000', '2000-12-01', '51 11111-0000', 'adm@gmail.com', '12345', 'Administrador');
+
+UPDATE usuarios
+SET senha = '$2y$10$1xveCuL74Z9mOffJsLxCV.YHMyod8M.o3ddexHErdzQvn.q5FRpXy'
+WHERE email = 'adm@gmail.com';
+
+ALTER TABLE produtos
+ADD COLUMN editora VARCHAR(100),
+ADD COLUMN edicao VARCHAR(100),
+ADD COLUMN sinopse TEXT,
+MODIFY COLUMN preco DECIMAL(10,2) NOT NULL,
+MODIFY COLUMN estoque INT NOT NULL DEFAULT 0,
+MODIFY COLUMN imagem VARCHAR(255);
+
+
+CREATE TABLE enderecos (
+id_endereco INT AUTO_INCREMENT PRIMARY KEY,
+id_usuario INT NOT NULL,
+nome_endereco VARCHAR(50) NOT NULL,
+cep VARCHAR(9) NOT NULL,
+rua VARCHAR(150) NOT NULL,
+numero VARCHAR(20) NOT NULL,
+complemento VARCHAR(100),
+bairro VARCHAR(100) NOT NULL,
+cidade VARCHAR(100) NOT NULL,
+estado VARCHAR(2) NOT NULL,
+FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
+);
+
+ALTER TABLE pedido
+ADD COLUMN id_endereco INT NULL;
+
+ALTER TABLE pedido
+ADD CONSTRAINT fk_pedido_endereco
+FOREIGN KEY (id_endereco) REFERENCES enderecos(id_endereco);
+
+ALTER TABLE item_carrinho
+MODIFY COLUMN quantidade INT NOT NULL;
+
+ALTER TABLE item_pedido
+MODIFY COLUMN quantidade INT NOT NULL;
+
+ALTER TABLE item_pedido ADD COLUMN nome_produto TEXT;
+
+ALTER TABLE item_pedido DROP FOREIGN KEY item_pedido_ibfk_2;
+
+ALTER TABLE item_pedido
+ADD CONSTRAINT fk_item_pedido_produto
+FOREIGN KEY (id_produto) REFERENCES produtos(id_produto)
+ON DELETE SET NULL;
+
+ALTER TABLE pedido
+MODIFY COLUMN valor_pedido DECIMAL(10,2);
+
+ALTER TABLE item_pedido
+MODIFY COLUMN valor_pedido DECIMAL(10,2),
+MODIFY COLUMN preci_unit DECIMAL(10,2);
