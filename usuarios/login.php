@@ -79,6 +79,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 Cadastre-se
             </a>
         </p>
+        <p>
+            Deseja voltar ao início?
+            <a href="../index.php">Clique Aqui</a>
+        </p>
 
     </div>
 

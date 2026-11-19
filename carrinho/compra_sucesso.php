@@ -3,15 +3,24 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-if (!isset($_SESSION["pedido_finalizado"])) {
+require_once("../conexao.php");
+
+if (!isset($_SESSION["pedido_finalizado"]) || !isset($_SESSION["id_usuario"])) {
     header("Location: carrinho.php");
     exit;
 }
 
 $idPedido = (int) $_SESSION["pedido_finalizado"];
+$idUsuario = (int) $_SESSION["id_usuario"];
 $mensagem = $_SESSION["mensagem_compra"] ?? "Compra realizada com sucesso!";
 
 unset($_SESSION["pedido_finalizado"], $_SESSION["mensagem_compra"]);
+
+$sql = "SELECT COUNT(*) AS total FROM pedido WHERE id_usuario = $idUsuario AND id_pedido <= $idPedido";
+$resultado = $conexao->query($sql);
+$linha = $resultado->fetch_assoc();
+
+$numeroPedido = (int) $linha["total"];
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -39,8 +48,7 @@ unset($_SESSION["pedido_finalizado"], $_SESSION["mensagem_compra"]);
     <div class="cartao-sucesso">
         <h1><?php echo htmlspecialchars($mensagem); ?></h1>
         <p>Seu pedido foi registrado na HQ Mania.</p>
-        <p>Número do pedido: <strong><?php echo $idPedido; ?></strong></p>
-        <p>Frete grátis para todo o Brasil!</p>
+        <p>Número do pedido: <strong><?php echo $numeroPedido; ?></strong></p>
         <a href="../index.php">Voltar para a página inicial</a>
     </div>
 </main>

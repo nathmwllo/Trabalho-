@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         );
         $stmt->execute();
         $mensagem = "Cadastro realizado com sucesso!";
-        header("Location: admindex.php");
+        header("Location: usuarios.php");
     }
 }
 
@@ -99,13 +99,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             </button>
 
         </form>
-
-        <p>
-            Já possui uma conta?
-            <a href="../usuarios/login.php">
-                Faça login
-            </a>
-        </p>
          
         <p>Deseja voltar para o início? <a href="usuarios.php">Clique aqui</a></p>
     </div>

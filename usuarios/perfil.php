@@ -20,12 +20,17 @@ $resultado = $conexao->query($sql);
 
 $pedidos = [];
 
+$numero_pedido = $resultado->num_rows;
+
 while ($pedido = $resultado->fetch_assoc()) {
+
+    $pedido["numero"] = $numero_pedido;
+    $numero_pedido--;
 
     $encontrou = false;
 
     if ($pesquisa == "" ||
-        stripos($pedido["id_pedido"], $pesquisa) !== false ||
+        stripos($pedido["numero"], $pesquisa) !== false ||
         stripos($pedido["data_pedido"], $pesquisa) !== false ||
         stripos($pedido["status_pedido"], $pesquisa) !== false ||
         stripos($pedido["valor_pedido"], $pesquisa) !== false) {
@@ -44,12 +49,23 @@ while ($pedido = $resultado->fetch_assoc()) {
 
         $id_produto = $item["id_produto"];
 
-        $sqlProduto = "SELECT * FROM produtos WHERE id_produto = $id_produto";
-        $resultadoProduto = $conexao->query($sqlProduto);
+        $nome = $item["nome_produto"] ?? "";
 
-        $produto = $resultadoProduto->fetch_assoc();
+        if ($id_produto != null) {
+            $sqlProduto = "SELECT nome_produto FROM produtos WHERE id_produto = $id_produto";
+            $resultadoProduto = $conexao->query($sqlProduto);
+            $produto = $resultadoProduto->fetch_assoc();
 
-        $item["nome_produto"] = $produto["nome_produto"] ?? "Produto não encontrado";
+            if ($produto) {
+                $nome = $produto["nome_produto"];
+            }
+        }
+
+        if ($nome == "") {
+            $nome = "Produto removido";
+        }
+
+        $item["nome_produto"] = $nome;
 
         if ($pesquisa != "") {
 
@@ -173,7 +189,7 @@ while ($pedido = $resultado->fetch_assoc()) {
 
                     <div class="pedido">
 
-                        <h4>Pedido #<?php echo $pedido["id_pedido"]; ?></h4>
+                        <h4>Pedido #<?php echo $pedido["numero"]; ?></h4>
 
                         <?php
                         echo "<p><strong>Data:</strong> " . date("d/m/Y", strtotime($pedido["data_pedido"])) . "</p>";

@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 require_once("../conexao.php");
@@ -15,8 +14,32 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if (($_POST["confirmar"] ?? "") === "sim") {
 
-        $sql = "DELETE FROM usuarios WHERE id_usuario = ?";
+        $sql = "DELETE FROM item_pedido WHERE id_pedido IN (SELECT id_pedido FROM pedido WHERE id_usuario = ?)";
+        $stmt = $conexao->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
 
+        $sql = "DELETE FROM pedido WHERE id_usuario = ?";
+        $stmt = $conexao->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+
+        $sql = "DELETE FROM item_carrinho WHERE id_carrinho IN (SELECT id_carrinho FROM carrinho WHERE id_usuario = ?)";
+        $stmt = $conexao->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+
+        $sql = "DELETE FROM carrinho WHERE id_usuario = ?";
+        $stmt = $conexao->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+
+        $sql = "DELETE FROM enderecos WHERE id_usuario = ?";
+        $stmt = $conexao->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+
+        $sql = "DELETE FROM usuarios WHERE id_usuario = ?";
         $stmt = $conexao->prepare($sql);
         $stmt->bind_param("i", $id);
 
@@ -74,10 +97,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         </p>
 
         <form method="POST" action="excluir_usuario.php"
-              onsubmit="return confirm('Tem certeza de que deseja excluir sua conta? Essa ação não pode ser desfeita.');">
+         onsubmit="return confirm('Tem certeza de que deseja excluir sua conta? Essa ação não pode ser desfeita.');">
 
             <input type="hidden" name="confirmar" value="sim">
-
             <button type="submit">Sim, excluir minha conta</button>
 
         </form>
